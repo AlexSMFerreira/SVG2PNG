@@ -1,3 +1,5 @@
+// CAN BE MODIFIED
+
 //! @file shape.hpp
 #ifndef __svg_SVGElements_hpp__
 #define __svg_SVGElements_hpp__

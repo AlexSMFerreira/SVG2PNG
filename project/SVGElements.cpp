@@ -1,3 +1,5 @@
+// CAN BE MODIFIED
+
 #include "SVGElements.hpp"
 
 namespace svg
