@@ -1,5 +1,3 @@
-// CAN BE MODIFIED
-
 //! @file shape.hpp
 #ifndef __svg_SVGElements_hpp__
 #define __svg_SVGElements_hpp__
@@ -40,7 +38,13 @@ namespace svg
         Point center;
         Point radius;
     };
-
-    // create class Rectangle
+    class Polygon : public SVGElement {
+    public:
+        Polygon(const Color &fill, const std::vector<Point> &points);
+        void draw(PNGImage &img) const override;
+    private:
+        Color fill;
+        std::vector<Point> points;
+    };
 }
 #endif

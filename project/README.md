@@ -1,4 +1,3 @@
-// Can be modified
 
 # Programming project
 

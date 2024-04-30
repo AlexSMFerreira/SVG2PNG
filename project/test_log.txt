@@ -1,183 +1,120 @@
 >>>> [1] batman <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/batman.png: could not load image!
+pixel (0 0): expected 13 67 111 got 255 255 255
 >>>> [2] batman_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/batman_2.png: could not load image!
+pixel (100 100): expected 255 0 0 got 255 255 255
 >>>> [3] blank_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/blank_1.png: could not load image!
 >>>> [4] blank_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/blank_2.png: could not load image!
 >>>> [5] circle_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/circle_1.png: could not load image!
+pixel (50 100): expected 0 0 255 got 255 255 255
 >>>> [6] circle_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/circle_2.png: could not load image!
+pixel (5 100): expected 255 0 0 got 255 255 255
 >>>> [7] ellipse_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/ellipse_1.png: could not load image!
+pixel (50 100): expected 0 0 255 got 255 255 255
 >>>> [8] ellipse_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/ellipse_2.png: could not load image!
+pixel (5 100): expected 255 0 0 got 255 255 255
 >>>> [9] group_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/group_1.png: could not load image!
+pixel (10 40): expected 255 0 0 got 255 255 255
 >>>> [10] group_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/group_2.png: could not load image!
+pixel (0 25): expected 255 0 0 got 255 255 255
 >>>> [11] group_3 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/group_3.png: could not load image!
+pixel (10 260): expected 255 0 0 got 255 255 255
 >>>> [12] group_4 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/group_4.png: could not load image!
+pixel (10 260): expected 255 0 0 got 255 255 255
 >>>> [13] group_5 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/group_5.png: could not load image!
+pixel (10 260): expected 255 0 0 got 255 255 255
 >>>> [14] group_6 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/group_6.png: could not load image!
+pixel (10 10): expected 255 0 0 got 255 255 255
 >>>> [15] group_7 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/group_7.png: could not load image!
+pixel (36 80): expected 255 0 0 got 255 255 255
 >>>> [16] line_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/line_1.png: could not load image!
+pixel (1 1): expected 0 255 0 got 255 255 255
 >>>> [17] line_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/line_2.png: could not load image!
+pixel (0 0): expected 0 0 0 got 255 255 255
 >>>> [18] lion <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/lion.png: could not load image!
+pixel (0 0): expected 0 255 0 got 255 255 255
 >>>> [19] polygon_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/polygon_1.png: could not load image!
+pixel (0 0): expected 255 0 0 got 255 255 255
 >>>> [20] polygon_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/polygon_2.png: could not load image!
+pixel (50 50): expected 255 255 0 got 255 255 255
 >>>> [21] polyline_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/polyline_1.png: could not load image!
+pixel (1 1): expected 0 0 255 got 255 255 255
 >>>> [22] polyline_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/polyline_2.png: could not load image!
+pixel (10 10): expected 0 0 255 got 255 255 255
 >>>> [23] polyline_3 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/polyline_3.png: could not load image!
+pixel (220 306): expected 122 51 111 got 255 255 255
 >>>> [24] rect_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rect_1.png: could not load image!
+pixel (0 0): expected 0 0 255 got 255 255 255
 >>>> [25] rect_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rect_2.png: could not load image!
+pixel (10 10): expected 255 0 0 got 255 255 255
 >>>> [26] rect_3 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rect_3.png: could not load image!
+pixel (30 32): expected 255 0 0 got 255 255 255
 >>>> [27] rotate_circle <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_circle.png: could not load image!
+pixel (21 212): expected 255 0 0 got 255 255 255
 >>>> [28] rotate_circle_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_circle_with_origin.png: could not load image!
+pixel (80 300): expected 240 240 240 got 255 255 255
 >>>> [29] rotate_line <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_line.png: could not load image!
+pixel (0 0): expected 255 255 0 got 255 255 255
 >>>> [30] rotate_line_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_line_with_origin.png: could not load image!
+pixel (41 66): expected 0 255 0 got 255 255 255
 >>>> [31] rotate_polygon <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_polygon.png: could not load image!
+pixel (58 41): expected 255 0 0 got 255 255 255
 >>>> [32] rotate_polygon_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_polygon_with_origin.png: could not load image!
+pixel (16 143): expected 0 0 255 got 255 255 255
 >>>> [33] rotate_polyline <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_polyline.png: could not load image!
+pixel (16 23): expected 0 255 0 got 255 255 255
 >>>> [34] rotate_polyline_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_polyline_with_origin.png: could not load image!
+pixel (10 10): expected 0 0 255 got 255 255 255
 >>>> [35] rotate_rect <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_rect.png: could not load image!
+pixel (6 252): expected 0 0 255 got 255 255 255
 >>>> [36] rotate_rect_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/rotate_rect_with_origin.png: could not load image!
+pixel (14 113): expected 0 255 0 got 255 255 255
 >>>> [37] scale_circle <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_circle.png: could not load image!
+pixel (10 30): expected 0 0 0 got 255 255 255
 >>>> [38] scale_circle_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_circle_with_origin.png: could not load image!
+pixel (100 300): expected 0 0 255 got 255 255 255
 >>>> [39] scale_ellipse <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_ellipse.png: could not load image!
+pixel (10 30): expected 0 0 0 got 255 255 255
 >>>> [40] scale_ellipse_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_ellipse_with_origin.png: could not load image!
+pixel (100 300): expected 0 0 255 got 255 255 255
 >>>> [41] scale_line <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_line.png: could not load image!
+pixel (100 100): expected 255 0 0 got 255 255 255
 >>>> [42] scale_line_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_line_with_origin.png: could not load image!
+pixel (50 50): expected 255 0 0 got 255 255 255
 >>>> [43] scale_polygon <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_polygon.png: could not load image!
+pixel (25 25): expected 255 0 0 got 255 255 255
 >>>> [44] scale_polygon_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_polygon_with_origin.png: could not load image!
+pixel (50 50): expected 255 255 0 got 255 255 255
 >>>> [45] scale_polyline <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_polyline.png: could not load image!
+pixel (20 20): expected 255 0 0 got 255 255 255
 >>>> [46] scale_polyline_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_polyline_with_origin.png: could not load image!
+pixel (20 160): expected 0 255 0 got 255 255 255
 >>>> [47] scale_rect <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_rect.png: could not load image!
+pixel (0 0): expected 0 0 0 got 255 255 255
 >>>> [48] scale_rect_with_origin <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/scale_rect_with_origin.png: could not load image!
+pixel (55 50): expected 0 255 0 got 255 255 255
 >>>> [49] transform_several <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/transform_several.png: could not load image!
+pixel (0 0): expected 255 0 0 got 255 255 255
 >>>> [50] translate_circle <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/translate_circle.png: could not load image!
+pixel (0 25): expected 0 255 0 got 255 255 255
 >>>> [51] translate_ellipse <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/translate_ellipse.png: could not load image!
+pixel (5 25): expected 0 255 0 got 255 255 255
 >>>> [52] translate_line <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/translate_line.png: could not load image!
+pixel (51 1): expected 255 0 0 got 255 255 255
 >>>> [53] translate_polygon <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/translate_polygon.png: could not load image!
+pixel (0 0): expected 255 0 0 got 255 255 255
 >>>> [54] translate_polyline <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/translate_polyline.png: could not load image!
+pixel (10 10): expected 0 0 255 got 255 255 255
 >>>> [55] translate_rect <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/translate_rect.png: could not load image!
+pixel (5 5): expected 0 255 0 got 255 255 255
 >>>> [56] use_1 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/use_1.png: could not load image!
+pixel (1 5): expected 255 0 0 got 255 255 255
 >>>> [57] use_2 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/use_2.png: could not load image!
+pixel (15 40): expected 255 0 0 got 255 255 255
 >>>> [58] use_3 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/use_3.png: could not load image!
+pixel (0 250): expected 255 0 0 got 255 255 255
 >>>> [59] use_4 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/use_4.png: could not load image!
+pixel (0 0): expected 255 0 0 got 255 255 255
 >>>> [60] use_5 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/use_5.png: could not load image!
+pixel (51 51): expected 0 255 0 got 255 255 255
 >>>> [61] use_6 <<<<
-terminate called after throwing an instance of 'std::runtime_error'
-  what():  ./output/use_6.png: could not load image!
+pixel (0 0): expected 0 0 0 got 255 255 255

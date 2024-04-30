@@ -1,5 +1,3 @@
-// CAN BE MODIFIED
-
 #include "SVGElements.hpp"
 
 namespace svg
@@ -21,6 +19,13 @@ namespace svg
     }
     // @todo provide the implementation of SVGElement derived classes
     // HERE -->
-    
+    Polygon::Polygon(const Color &fill, const std::vector<Point> &points)
+        : fill(fill), points(points)
+    {
+    }
+    void Polygon::draw(PNGImage &img) const
+    {
+        img.draw_polygon(points, fill);
+    }
 
 }
