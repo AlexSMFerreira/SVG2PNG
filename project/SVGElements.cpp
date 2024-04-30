@@ -34,6 +34,9 @@ namespace svg
     }
     void Polyline::draw(PNGImage &img) const
     {
-        std::cout << "Polyline not implemented yet!" << std::endl;
+        for(size_t i = 0; i < points.size() - 1; i++)
+        {
+            img.draw_line(points[i], points[i + 1], stroke);
+        }
     }
 }
