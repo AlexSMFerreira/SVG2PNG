@@ -1,5 +1,5 @@
 #include "SVGElements.hpp"
-
+#include <iostream>
 namespace svg
 {
     // These must be defined!
@@ -28,4 +28,12 @@ namespace svg
         img.draw_polygon(points, fill);
     }
 
+    Polyline::Polyline(const Color &stroke, const std::vector<Point> &points)
+        : stroke(stroke), points(points)
+    {
+    }
+    void Polyline::draw(PNGImage &img) const
+    {
+        std::cout << "Polyline not implemented yet!" << std::endl;
+    }
 }

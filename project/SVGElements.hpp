@@ -46,5 +46,15 @@ namespace svg
         Color fill;
         std::vector<Point> points;
     };
+
+    class Polyline : public SVGElement {
+    public:
+        Polyline(const Color &stroke, const std::vector<Point> &points);
+        void draw(PNGImage &img) const override;
+    private:
+        Color stroke;
+        std::vector<Point> points;
+    };
+
 }
 #endif
