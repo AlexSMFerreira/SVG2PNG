@@ -40,5 +40,7 @@ namespace svg
         Point center;
         Point radius;
     };
+
+    // create class Rectangle
 }
 #endif

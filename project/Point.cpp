@@ -26,5 +26,4 @@ namespace svg
         return {origin.x + (x - origin.x) * v,
                 origin.y + (y - origin.y) * v};
     }
-
 }
