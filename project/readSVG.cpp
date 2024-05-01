@@ -53,8 +53,8 @@ namespace svg
             Color c_stroke;
             string point_str;
             string point;
-            
             switch(encode(child_name)) {
+                // codigo util
                 case ellipse:
                     c_fill = parse_color(child->Attribute("fill"));
                     c_center = {child->IntAttribute("cx"), child->IntAttribute("cy")};
