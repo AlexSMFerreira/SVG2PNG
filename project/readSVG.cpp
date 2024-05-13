@@ -123,35 +123,43 @@ void parseElement(tinyxml2::XMLElement *child,
         c_fill = parse_color(child->Attribute("fill"));
         c_center = {child->IntAttribute("cx"), child->IntAttribute("cy")};
         c_radius = {child->IntAttribute("r"), child->IntAttribute("r")};
-        /*
+
         // transforms
-        if(child->Attribute("transform") != NULL) {
+        if (child->Attribute("transform") != NULL) {
             transform = child->Attribute("transform");
-            if(child->Attribute("transform-origin") != NULL) {
+            if (child->Attribute("transform-origin") != NULL) {
                 transform_origin = child->Attribute("transform-origin");
-                origin = {stoi(transform_origin.substr(0,
-        transform_origin.find(" "))),
-        stoi(transform_origin.substr(transform_origin.find(" ") + 1,
-        transform_origin.size()))};
+                origin = {
+                    stoi(
+                        transform_origin.substr(0, transform_origin.find(" "))),
+                    stoi(transform_origin.substr(transform_origin.find(" ") + 1,
+                                                 transform_origin.size()))};
             }
-            if(transform.find("translate") != string::npos) {
-                translate = {stoi(transform.substr(transform.find("(")+1,
-        transform.find(" ") - transform.find("(") - 1)),
-        stoi(transform.substr(transform.find(" ")+1, transform.find(")") -
-        transform.find(" ") - 1))}; c_center = c_center.translate(translate);
+            if (transform.find("translate") != string::npos) {
+                translate = {
+                    stoi(transform.substr(transform.find("(") + 1,
+                                          transform.find(" ") -
+                                              transform.find("(") - 1)),
+                    stoi(transform.substr(transform.find(" ") + 1,
+                                          transform.find(")") -
+                                              transform.find(" ") - 1))};
+                c_center = c_center.translate(translate);
             }
-            if(transform.find("rotate") != string::npos) {
+            if (transform.find("rotate") != string::npos) {
                 r_angle = stoi(transform.substr(transform.find("(") + 1,
-        transform.find(")") - transform.find("(") - 1)); c_center =
-        c_center.rotate(origin, r_angle);
+                                                transform.find(")") -
+                                                    transform.find("(") - 1));
+                c_center = c_center.rotate(origin, r_angle);
             }
-            if(transform.find("scale") != string::npos) {
-                scale_factor = stoi(transform.substr(transform.find("(") + 1,
-        transform.find(")") - transform.find("(") - 1)); c_radius =
-        c_radius.scale(origin, scale_factor);
+            if (transform.find("scale") != string::npos) {
+                scale_factor = stoi(transform.substr(
+                    transform.find("(") + 1,
+                    transform.find(")") - transform.find("(") - 1));
+                c_radius = c_radius.scale({0, 0}, scale_factor);
+                c_center = c_center.scale(origin, scale_factor);
             }
         }
-        */
+
         shapes.push_back(new Ellipse(c_fill, c_center, c_radius));
         break;
     case polygon:

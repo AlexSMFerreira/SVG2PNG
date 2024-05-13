@@ -41,9 +41,7 @@ pixel (36 80): expected 255 0 0 got 255 255 255
 >>>> [25] rect_2 <<<<
 >>>> [26] rect_3 <<<<
 >>>> [27] rotate_circle <<<<
-pixel (21 212): expected 255 0 0 got 255 255 255
 >>>> [28] rotate_circle_with_origin <<<<
-pixel (100 300): expected 0 0 255 got 240 240 240
 >>>> [29] rotate_line <<<<
 >>>> [30] rotate_line_with_origin <<<<
 >>>> [31] rotate_polygon <<<<
@@ -53,9 +51,7 @@ pixel (100 300): expected 0 0 255 got 240 240 240
 >>>> [35] rotate_rect <<<<
 >>>> [36] rotate_rect_with_origin <<<<
 >>>> [37] scale_circle <<<<
-pixel (20 60): expected 255 0 0 got 255 255 255
 >>>> [38] scale_circle_with_origin <<<<
-pixel (100 300): expected 0 0 255 got 255 255 255
 >>>> [39] scale_ellipse <<<<
 >>>> [40] scale_ellipse_with_origin <<<<
 >>>> [41] scale_line <<<<
@@ -68,7 +64,6 @@ pixel (100 300): expected 0 0 255 got 255 255 255
 >>>> [48] scale_rect_with_origin <<<<
 >>>> [49] transform_several <<<<
 >>>> [50] translate_circle <<<<
-pixel (0 25): expected 0 255 0 got 255 255 0
 >>>> [51] translate_ellipse <<<<
 >>>> [52] translate_line <<<<
 >>>> [53] translate_polygon <<<<
@@ -82,7 +77,7 @@ pixel (11 5): expected 255 0 0 got 255 255 255
 Unknown element
 Unknown element
 Unknown element
-pixel (15 40): expected 255 0 0 got 0 0 255
+pixel (15 100): expected 0 0 255 got 255 255 255
 >>>> [58] use_3 <<<<
 Unknown element
 Unknown element
