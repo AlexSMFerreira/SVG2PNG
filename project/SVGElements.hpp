@@ -6,6 +6,7 @@
 #include "Color.hpp"
 #include "Point.hpp"
 #include "PNGImage.hpp"
+#include "external/tinyxml2/tinyxml2.h"
 
 namespace svg
 {
@@ -25,6 +26,7 @@ namespace svg
     void readSVG(const std::string &svg_file,
                  Point &dimensions,
                  std::vector<SVGElement *> &svg_elements);
+    void parseElement(tinyxml2::XMLElement *child, std::vector<svg::SVGElement *> &shapes, size_t &pos, std::string &delimiter);
     void convert(const std::string &svg_file,
                  const std::string &png_file);
 
