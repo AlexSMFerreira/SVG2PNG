@@ -45,9 +45,7 @@ pixel (21 212): expected 255 0 0 got 255 255 255
 >>>> [28] rotate_circle_with_origin <<<<
 pixel (100 300): expected 0 0 255 got 240 240 240
 >>>> [29] rotate_line <<<<
-pixel (0 1): expected 255 0 0 got 255 255 255
 >>>> [30] rotate_line_with_origin <<<<
-pixel (41 66): expected 0 255 0 got 255 255 255
 >>>> [31] rotate_polygon <<<<
 >>>> [32] rotate_polygon_with_origin <<<<
 >>>> [33] rotate_polyline <<<<
@@ -59,13 +57,9 @@ pixel (20 60): expected 255 0 0 got 255 255 255
 >>>> [38] scale_circle_with_origin <<<<
 pixel (100 300): expected 0 0 255 got 255 255 255
 >>>> [39] scale_ellipse <<<<
-test: PNGImage.cpp:62: svg::Color& svg::PNGImage::at(int, int): Assertion `x >= 0 && x < width_' failed.
 >>>> [40] scale_ellipse_with_origin <<<<
-test: PNGImage.cpp:62: svg::Color& svg::PNGImage::at(int, int): Assertion `x >= 0 && x < width_' failed.
 >>>> [41] scale_line <<<<
-pixel (50 50): expected 255 255 255 got 0 255 0
 >>>> [42] scale_line_with_origin <<<<
-pixel (50 50): expected 255 0 0 got 0 255 0
 >>>> [43] scale_polygon <<<<
 >>>> [44] scale_polygon_with_origin <<<<
 >>>> [45] scale_polyline <<<<
@@ -77,12 +71,9 @@ pixel (50 50): expected 255 0 0 got 0 255 0
 pixel (0 25): expected 0 255 0 got 255 255 0
 >>>> [51] translate_ellipse <<<<
 >>>> [52] translate_line <<<<
-pixel (1 1): expected 255 255 255 got 0 255 0
 >>>> [53] translate_polygon <<<<
 >>>> [54] translate_polyline <<<<
 >>>> [55] translate_rect <<<<
-terminate called after throwing an instance of 'std::invalid_argument'
-  what():  stoi
 >>>> [56] use_1 <<<<
 Unknown element
 Unknown element
