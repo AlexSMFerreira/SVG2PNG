@@ -259,6 +259,9 @@ void parseElement(tinyxml2::XMLElement *child,
         shapes.push_back(l);
         break;
     }
+    case use:
+        cout << "Use" << endl;
+        break;
     default:
         cout << "Unknown element" << endl;
     }
