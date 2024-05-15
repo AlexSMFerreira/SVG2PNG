@@ -7,6 +7,7 @@
 #include "PNGImage.hpp"
 #include "Point.hpp"
 #include "external/tinyxml2/tinyxml2.h"
+using namespace std;
 
 namespace svg {
 class SVGElement {
@@ -15,6 +16,10 @@ class SVGElement {
     SVGElement();
     virtual ~SVGElement();
     virtual void draw(PNGImage &img) const = 0;
+    string get_id();
+
+  private:
+    string id;
 };
 
 // Declaration of namespace functions
@@ -24,14 +29,14 @@ class SVGElement {
 void readSVG(const std::string &svg_file, Point &dimensions,
              std::vector<SVGElement *> &svg_elements);
 void parseElement(tinyxml2::XMLElement *child,
-                  std::vector<svg::SVGElement *> &shapes, size_t &pos,
-                  std::string &delimiter);
-void convert(const std::string &svg_file, const std::string &png_file);
+                  std::vector<svg::SVGElement *> &shapes);
+void convert(const string &svg_file, const std::string &png_file);
 
 class Ellipse : public SVGElement {
   public:
     Ellipse(const Color &fill, const Point &center, const Point &radius);
     void draw(PNGImage &img) const override;
+    void transform(string transform_string, Point transform_origin);
 
   private:
     Color fill;
@@ -42,6 +47,7 @@ class Polygon : public SVGElement {
   public:
     Polygon(const Color &fill, const std::vector<Point> &points);
     void draw(PNGImage &img) const override;
+    void transform(string transform_string, Point transform_origin);
 
   private:
     Color fill;
@@ -52,6 +58,7 @@ class Polyline : public SVGElement {
   public:
     Polyline(const Color &stroke, const std::vector<Point> &points);
     void draw(PNGImage &img) const override;
+    void transform(string transform_string, Point transform_origin);
 
   private:
     Color stroke;

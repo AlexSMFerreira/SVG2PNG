@@ -4,12 +4,23 @@
 #include "external/tinyxml2/tinyxml2.h"
 #include <cmath>
 #include <iostream>
+#include <unordered_map>
 
 using namespace std;
 using namespace tinyxml2;
 
 namespace svg {
-enum type_code { group, ellipse, circle, polygon, rect, polyline, line, other };
+enum type_code {
+    group,
+    ellipse,
+    circle,
+    polygon,
+    rect,
+    polyline,
+    line,
+    use,
+    other
+};
 
 type_code encode(string const &type_string) {
     if (type_string == "ellipse")
@@ -26,6 +37,8 @@ type_code encode(string const &type_string) {
         return line;
     else if (type_string == "g")
         return group;
+    else if (type_string == "use")
+        return use;
     else
         return other;
 }
@@ -43,21 +56,25 @@ void readSVG(const string &svg_file, Point &dimensions,
     dimensions.x = xml_elem->IntAttribute("width");
     dimensions.y = xml_elem->IntAttribute("height");
 
-    string delimiter = " ";
-    size_t pos = 0;
-
     for (XMLElement *child = xml_elem->FirstChildElement(); child != NULL;
          child = child->NextSiblingElement()) {
-        parseElement(child, shapes, pos, delimiter);
+        parseElement(child, shapes);
     }
 
     svg_elements = shapes;
+
+    unordered_map<string, SVGElement *> dictionary;
+    for (SVGElement *element : svg_elements) {
+        if (element->get_id() != "") {
+            dictionary[element->get_id()] = element;
+        }
+    }
+
     shapes.clear();
 }
 
 void parseElement(tinyxml2::XMLElement *child,
-                  std::vector<svg::SVGElement *> &shapes, size_t &pos,
-                  std::string &delimiter) {
+                  std::vector<svg::SVGElement *> &shapes) {
     string child_name(child->Name());
     Color c_fill;
     Point c_center;
@@ -66,17 +83,15 @@ void parseElement(tinyxml2::XMLElement *child,
     Color c_stroke;
     string point_str;
     string point;
-
-    Point translate;
-    int r_angle;
-    int scale_factor;
+    string delimiter = " ";
+    size_t pos = 0;
     Point origin = {0, 0};
 
     string transform = "";
     string transform_origin = "";
 
     switch (encode(child_name)) {
-    case ellipse:
+    case ellipse: {
         c_fill = parse_color(child->Attribute("fill"));
         c_center = {child->IntAttribute("cx"), child->IntAttribute("cy")};
         c_radius = {child->IntAttribute("rx"), child->IntAttribute("ry")};
@@ -92,34 +107,16 @@ void parseElement(tinyxml2::XMLElement *child,
                     stoi(transform_origin.substr(transform_origin.find(" ") + 1,
                                                  transform_origin.size()))};
             }
-            if (transform.find("translate") != string::npos) {
-                translate = {
-                    stoi(transform.substr(transform.find("(") + 1,
-                                          transform.find(" ") -
-                                              transform.find("(") - 1)),
-                    stoi(transform.substr(transform.find(" ") + 1,
-                                          transform.find(")") -
-                                              transform.find(" ") - 1))};
-                c_center = c_center.translate(translate);
-            }
-            if (transform.find("rotate") != string::npos) {
-                r_angle = stoi(transform.substr(transform.find("(") + 1,
-                                                transform.find(")") -
-                                                    transform.find("(") - 1));
-                c_center = c_center.rotate(origin, r_angle);
-            }
-            if (transform.find("scale") != string::npos) {
-                scale_factor = stoi(transform.substr(
-                    transform.find("(") + 1,
-                    transform.find(")") - transform.find("(") - 1));
-                c_radius = c_radius.scale({0, 0}, scale_factor);
-                c_center = c_center.scale(origin, scale_factor);
-            }
         }
+        Ellipse *e = new Ellipse(c_fill, c_center, c_radius);
+        if (transform != "") {
+            e->transform(transform, origin);
+        }
+        shapes.push_back(e);
 
-        shapes.push_back(new Ellipse(c_fill, c_center, c_radius));
         break;
-    case circle:
+    }
+    case circle: {
         c_fill = parse_color(child->Attribute("fill"));
         c_center = {child->IntAttribute("cx"), child->IntAttribute("cy")};
         c_radius = {child->IntAttribute("r"), child->IntAttribute("r")};
@@ -135,34 +132,15 @@ void parseElement(tinyxml2::XMLElement *child,
                     stoi(transform_origin.substr(transform_origin.find(" ") + 1,
                                                  transform_origin.size()))};
             }
-            if (transform.find("translate") != string::npos) {
-                translate = {
-                    stoi(transform.substr(transform.find("(") + 1,
-                                          transform.find(" ") -
-                                              transform.find("(") - 1)),
-                    stoi(transform.substr(transform.find(" ") + 1,
-                                          transform.find(")") -
-                                              transform.find(" ") - 1))};
-                c_center = c_center.translate(translate);
-            }
-            if (transform.find("rotate") != string::npos) {
-                r_angle = stoi(transform.substr(transform.find("(") + 1,
-                                                transform.find(")") -
-                                                    transform.find("(") - 1));
-                c_center = c_center.rotate(origin, r_angle);
-            }
-            if (transform.find("scale") != string::npos) {
-                scale_factor = stoi(transform.substr(
-                    transform.find("(") + 1,
-                    transform.find(")") - transform.find("(") - 1));
-                c_radius = c_radius.scale({0, 0}, scale_factor);
-                c_center = c_center.scale(origin, scale_factor);
-            }
         }
-
-        shapes.push_back(new Ellipse(c_fill, c_center, c_radius));
+        Ellipse *c = new Ellipse(c_fill, c_center, c_radius);
+        if (transform != "") {
+            c->transform(transform, origin);
+        }
+        shapes.push_back(c);
         break;
-    case polygon:
+    }
+    case polygon: {
         c_fill = parse_color(child->Attribute("fill"));
         point_str = child->Attribute("points");
         while ((pos = point_str.find(delimiter)) != string::npos) {
@@ -186,38 +164,15 @@ void parseElement(tinyxml2::XMLElement *child,
                     stoi(transform_origin.substr(transform_origin.find(" ") + 1,
                                                  transform_origin.size()))};
             }
-            if (transform.find("translate") != string::npos) {
-                translate = {
-                    stoi(transform.substr(transform.find("(") + 1,
-                                          transform.find(" ") -
-                                              transform.find("(") - 1)),
-                    stoi(transform.substr(transform.find(" ") + 1,
-                                          transform.find(")") -
-                                              transform.find(" ") - 1))};
-                for (Point &p : c_points) {
-                    p = p.translate(translate);
-                }
-            }
-            if (transform.find("rotate") != string::npos) {
-                r_angle = stoi(transform.substr(transform.find("(") + 1,
-                                                transform.find(")") -
-                                                    transform.find("(") - 1));
-                for (Point &p : c_points) {
-                    p = p.rotate(origin, r_angle);
-                }
-            }
-            if (transform.find("scale") != string::npos) {
-                scale_factor = stoi(transform.substr(
-                    transform.find("(") + 1,
-                    transform.find(")") - transform.find("(") - 1));
-                for (Point &p : c_points) {
-                    p = p.scale(origin, scale_factor);
-                }
-            }
         }
-        shapes.push_back(new Polygon(c_fill, c_points));
+        Polygon *p = new Polygon(c_fill, c_points);
+        if (transform != "") {
+            p->transform(transform, origin);
+        }
+        shapes.push_back(p);
         break;
-    case rect:
+    }
+    case rect: {
         c_fill = parse_color(child->Attribute("fill"));
         c_points.push_back(
             {child->IntAttribute("x"), child->IntAttribute("y")});
@@ -241,39 +196,15 @@ void parseElement(tinyxml2::XMLElement *child,
                     stoi(transform_origin.substr(transform_origin.find(" ") + 1,
                                                  transform_origin.size()))};
             }
-            if (transform.find("translate") != string::npos) {
-                translate = {
-                    stoi(transform.substr(transform.find("(") + 1,
-                                          transform.find_first_of(" ,") -
-                                              transform.find("(") - 1)),
-                    stoi(transform.substr(transform.find_first_of(" ,") + 1,
-                                          transform.find(")") -
-                                              transform.find_first_of(" ,") -
-                                              1))};
-                for (Point &p : c_points) {
-                    p = p.translate(translate);
-                }
-            }
-            if (transform.find("rotate") != string::npos) {
-                r_angle = stoi(transform.substr(transform.find("(") + 1,
-                                                transform.find(")") -
-                                                    transform.find("(") - 1));
-                for (Point &p : c_points) {
-                    p = p.rotate(origin, r_angle);
-                }
-            }
-            if (transform.find("scale") != string::npos) {
-                scale_factor = stoi(transform.substr(
-                    transform.find("(") + 1,
-                    transform.find(")") - transform.find("(") - 1));
-                for (Point &p : c_points) {
-                    p = p.scale(origin, scale_factor);
-                }
-            }
         }
-        shapes.push_back(new Polygon(c_fill, c_points));
+        Polygon *r = new Polygon(c_fill, c_points);
+        if (transform != "") {
+            r->transform(transform, origin);
+        }
+        shapes.push_back(r);
         break;
-    case polyline:
+    }
+    case polyline: {
         c_stroke = parse_color(child->Attribute("stroke"));
         point_str = child->Attribute("points");
         while ((pos = point_str.find(delimiter)) != string::npos) {
@@ -295,38 +226,15 @@ void parseElement(tinyxml2::XMLElement *child,
                     stoi(transform_origin.substr(transform_origin.find(" ") + 1,
                                                  transform_origin.size()))};
             }
-            if (transform.find("translate") != string::npos) {
-                translate = {
-                    stoi(transform.substr(transform.find("(") + 1,
-                                          transform.find(" ") -
-                                              transform.find("(") - 1)),
-                    stoi(transform.substr(transform.find(" ") + 1,
-                                          transform.find(")") -
-                                              transform.find(" ") - 1))};
-                for (Point &p : c_points) {
-                    p = p.translate(translate);
-                }
-            }
-            if (transform.find("rotate") != string::npos) {
-                r_angle = stoi(transform.substr(transform.find("(") + 1,
-                                                transform.find(")") -
-                                                    transform.find("(") - 1));
-                for (Point &p : c_points) {
-                    p = p.rotate(origin, r_angle);
-                }
-            }
-            if (transform.find("scale") != string::npos) {
-                scale_factor = stoi(transform.substr(
-                    transform.find("(") + 1,
-                    transform.find(")") - transform.find("(") - 1));
-                for (Point &p : c_points) {
-                    p = p.scale(origin, scale_factor);
-                }
-            }
         }
-        shapes.push_back(new Polyline(c_stroke, c_points));
+        Polyline *p = new Polyline(c_stroke, c_points);
+        if (transform != "") {
+            p->transform(transform, origin);
+        }
+        shapes.push_back(p);
         break;
-    case line:
+    }
+    case line: {
         c_stroke = parse_color(child->Attribute("stroke"));
         c_points.push_back(
             {child->IntAttribute("x1"), child->IntAttribute("y1")});
@@ -343,37 +251,14 @@ void parseElement(tinyxml2::XMLElement *child,
                     stoi(transform_origin.substr(transform_origin.find(" ") + 1,
                                                  transform_origin.size()))};
             }
-            if (transform.find("translate") != string::npos) {
-                translate = {
-                    stoi(transform.substr(transform.find("(") + 1,
-                                          transform.find(" ") -
-                                              transform.find("(") - 1)),
-                    stoi(transform.substr(transform.find(" ") + 1,
-                                          transform.find(")") -
-                                              transform.find(" ") - 1))};
-                for (Point &p : c_points) {
-                    p = p.translate(translate);
-                }
-            }
-            if (transform.find("rotate") != string::npos) {
-                r_angle = stoi(transform.substr(transform.find("(") + 1,
-                                                transform.find(")") -
-                                                    transform.find("(") - 1));
-                for (Point &p : c_points) {
-                    p = p.rotate(origin, r_angle);
-                }
-            }
-            if (transform.find("scale") != string::npos) {
-                scale_factor = stoi(transform.substr(
-                    transform.find("(") + 1,
-                    transform.find(")") - transform.find("(") - 1));
-                for (Point &p : c_points) {
-                    p = p.scale(origin, scale_factor);
-                }
-            }
         }
-        shapes.push_back(new Polyline(c_stroke, c_points));
+        Polyline *l = new Polyline(c_stroke, c_points);
+        if (transform != "") {
+            l->transform(transform, origin);
+        }
+        shapes.push_back(l);
         break;
+    }
     default:
         cout << "Unknown element" << endl;
     }
