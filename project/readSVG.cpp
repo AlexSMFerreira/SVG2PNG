@@ -43,6 +43,8 @@ type_code encode(string const &type_string) {
         return other;
 }
 
+unordered_map<string, SVGElement *> dictionary;
+
 void readSVG(const string &svg_file, Point &dimensions,
              vector<SVGElement *> &svg_elements) {
     XMLDocument doc;
@@ -62,14 +64,6 @@ void readSVG(const string &svg_file, Point &dimensions,
     }
 
     svg_elements = shapes;
-
-    unordered_map<string, SVGElement *> dictionary;
-    for (SVGElement *element : svg_elements) {
-        if (element->get_id() != "") {
-            dictionary[element->get_id()] = element;
-        }
-    }
-
     shapes.clear();
 }
 
@@ -86,7 +80,7 @@ void parseElement(tinyxml2::XMLElement *child,
     string delimiter = " ";
     size_t pos = 0;
     Point origin = {0, 0};
-
+    string id = "";
     string transform = "";
     string transform_origin = "";
 
@@ -112,6 +106,13 @@ void parseElement(tinyxml2::XMLElement *child,
         if (transform != "") {
             e->transform(transform, origin);
         }
+        // id
+        id = child->Attribute("id");
+        if (id != "") {
+            pair<string, SVGElement *> pair = make_pair(id, e);
+            dictionary.insert(pair);
+        }
+        // save shape
         shapes.push_back(e);
 
         break;
@@ -137,7 +138,16 @@ void parseElement(tinyxml2::XMLElement *child,
         if (transform != "") {
             c->transform(transform, origin);
         }
+
+        // id
+        id = child->Attribute("id");
+        if (id != "") {
+            pair<string, SVGElement *> pair = make_pair(id, c);
+            dictionary.insert(pair);
+        }
+        // save shape
         shapes.push_back(c);
+
         break;
     }
     case polygon: {
@@ -169,7 +179,16 @@ void parseElement(tinyxml2::XMLElement *child,
         if (transform != "") {
             p->transform(transform, origin);
         }
+
+        // id
+        id = child->Attribute("id");
+        if (id != "") {
+            pair<string, SVGElement *> pair = make_pair(id, p);
+            dictionary.insert(pair);
+        }
+        // save shape
         shapes.push_back(p);
+
         break;
     }
     case rect: {
@@ -201,6 +220,14 @@ void parseElement(tinyxml2::XMLElement *child,
         if (transform != "") {
             r->transform(transform, origin);
         }
+
+        // id
+        id = child->Attribute("id");
+        if (id != "") {
+            pair<string, SVGElement *> pair = make_pair(id, r);
+            dictionary.insert(pair);
+        }
+
         shapes.push_back(r);
         break;
     }
@@ -231,6 +258,14 @@ void parseElement(tinyxml2::XMLElement *child,
         if (transform != "") {
             p->transform(transform, origin);
         }
+
+        // id
+        id = child->Attribute("id");
+        if (id != "") {
+            pair<string, SVGElement *> pair = make_pair(id, p);
+            dictionary.insert(pair);
+        }
+
         shapes.push_back(p);
         break;
     }
@@ -256,6 +291,14 @@ void parseElement(tinyxml2::XMLElement *child,
         if (transform != "") {
             l->transform(transform, origin);
         }
+
+        // id
+        id = child->Attribute("id");
+        if (id != "") {
+            pair<string, SVGElement *> pair = make_pair(id, l);
+            dictionary.insert(pair);
+        }
+
         shapes.push_back(l);
         break;
     }

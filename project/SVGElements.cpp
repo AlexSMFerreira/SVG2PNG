@@ -138,6 +138,5 @@ void Polyline::transform(string transform, Point origin) {
         }
     }
 }
-string SVGElement::get_id() { return id; }
 }   // namespace svg
 // namespace svg

@@ -7,6 +7,7 @@
 #include "PNGImage.hpp"
 #include "Point.hpp"
 #include "external/tinyxml2/tinyxml2.h"
+#include <unordered_map>
 using namespace std;
 
 namespace svg {
@@ -16,10 +17,6 @@ class SVGElement {
     SVGElement();
     virtual ~SVGElement();
     virtual void draw(PNGImage &img) const = 0;
-    string get_id();
-
-  private:
-    string id;
 };
 
 // Declaration of namespace functions
