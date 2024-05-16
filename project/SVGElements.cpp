@@ -164,4 +164,3 @@ void Polyline::transform(string transform, Point origin) {
 }
 SVGElement *Polyline::clone() const { return new Polyline(stroke, points); }
 }   // namespace svg
-// namespace svg
