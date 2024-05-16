@@ -17,10 +17,8 @@ class SVGElement {
     SVGElement();
     virtual ~SVGElement();
     virtual void draw(PNGImage &img) const = 0;
-    string get_id();
-
-  private:
-    string id;
+    virtual void transform(string transform_string, Point transform_origin) = 0;
+    virtual SVGElement *clone() const = 0;
 };
 
 // Declaration of namespace functions
@@ -38,7 +36,8 @@ class Ellipse : public SVGElement {
   public:
     Ellipse(const Color &fill, const Point &center, const Point &radius);
     void draw(PNGImage &img) const override;
-    void transform(string transform_string, Point transform_origin);
+    void transform(string transform_string, Point transform_origin) override;
+    SVGElement *clone() const override;
 
   private:
     Color fill;
@@ -49,7 +48,8 @@ class Polygon : public SVGElement {
   public:
     Polygon(const Color &fill, const std::vector<Point> &points);
     void draw(PNGImage &img) const override;
-    void transform(string transform_string, Point transform_origin);
+    void transform(string transform_string, Point transform_origin) override;
+    SVGElement *clone() const override;
 
   private:
     Color fill;
@@ -60,12 +60,37 @@ class Polyline : public SVGElement {
   public:
     Polyline(const Color &stroke, const std::vector<Point> &points);
     void draw(PNGImage &img) const override;
-    void transform(string transform_string, Point transform_origin);
+    void transform(string transform_string, Point transform_origin) override;
+    SVGElement *clone() const override;
 
   private:
     Color stroke;
     std::vector<Point> points;
 };
 
+class Group : public SVGElement {
+  public:
+    Group(const std::vector<SVGElement *> &elements);
+    ~Group();
+    void draw(PNGImage &img) const override;
+    void addElement(SVGElement *element);
+    void transform(string transform_string, Point transform_origin) override;
+    SVGElement *clone() const override;
+
+  private:
+    std::vector<SVGElement *> elements;
+};
+
+class Use : public SVGElement {
+  public:
+    Use(SVGElement *element);
+    ~Use();
+    void draw(PNGImage &img) const override;
+    void transform(string transform_string, Point transform_origin) override;
+    SVGElement *clone() const override;
+
+  private:
+    SVGElement *element;
+};
 }   // namespace svg
 #endif

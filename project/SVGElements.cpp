@@ -6,20 +6,41 @@
 
 namespace svg {
 
-class SVGGroup : public SVGElement {
-  private:
-    std::vector<SVGElement *> elements;
-
-  public:
-    SVGGroup() {}
-
-    virtual ~SVGGroup() {
-        for (auto &element : elements) {
-            delete element;
-        }
+Group::Group(const std::vector<SVGElement *> &elements) {
+    for (SVGElement *element : elements) {
+        this->elements.push_back(element);
+    }
+}
+void Group::draw(PNGImage &img) const {
+    for (SVGElement *element : elements) {
+        element->draw(img);
     }
 };
+void Group::transform(string transform, Point origin) {
+    for (SVGElement *element : elements) {
+        element->transform(transform, origin);
+    }
+};
+SVGElement *Group::clone() const {
+    std::vector<SVGElement *> cloned_elements;
+    for (SVGElement *element : elements) {
+        cloned_elements.push_back(element->clone());
+    }
+    return new Group(cloned_elements);
+}
+Group::~Group() {
+    for (SVGElement *element : elements) {
+        delete element;
+    }
+}
 
+Use::Use(SVGElement *element) { this->element = element->clone(); }
+Use::~Use() { delete element; }
+void Use::draw(PNGImage &img) const { element->draw(img); }
+void Use::transform(string transform, Point origin) {
+    element->transform(transform, origin);
+}
+SVGElement *Use::clone() const { return new Use(element); }
 // These must not be defined!
 SVGElement::SVGElement() {}
 SVGElement::~SVGElement() {}
@@ -36,12 +57,13 @@ void Ellipse::transform(string transform, Point origin) {
     int scale_factor;
 
     if (transform.find("translate") != string::npos) {
-        translate = {stoi(transform.substr(transform.find("(") + 1,
-                                           transform.find(" ") -
-                                               transform.find("(") - 1)),
-                     stoi(transform.substr(transform.find(" ") + 1,
-                                           transform.find(")") -
-                                               transform.find(" ") - 1))};
+        translate = {
+            stoi(transform.substr(transform.find("(") + 1,
+                                  transform.find_first_of(" ,") -
+                                      transform.find("(") - 1)),
+            stoi(transform.substr(transform.find_first_of(", ") + 1,
+                                  transform.find(")") -
+                                      transform.find_first_of(", ") - 1))};
         center = center.translate(translate);
     }
     if (transform.find("rotate") != string::npos) {
@@ -59,6 +81,7 @@ void Ellipse::transform(string transform, Point origin) {
     }
     // @todo implement the transformation
 }
+SVGElement *Ellipse::clone() const { return new Ellipse(fill, center, radius); }
 // @todo provide the implementation of SVGElement derived classes
 // HERE -->
 Polygon::Polygon(const Color &fill, const std::vector<Point> &points)
@@ -97,6 +120,7 @@ void Polygon::transform(string transform, Point origin) {
         }
     }
 }
+SVGElement *Polygon::clone() const { return new Polygon(fill, points); }
 
 Polyline::Polyline(const Color &stroke, const std::vector<Point> &points)
     : stroke(stroke), points(points) {}
@@ -138,6 +162,6 @@ void Polyline::transform(string transform, Point origin) {
         }
     }
 }
-string SVGElement::get_id() { return id; }
+SVGElement *Polyline::clone() const { return new Polyline(stroke, points); }
 }   // namespace svg
 // namespace svg

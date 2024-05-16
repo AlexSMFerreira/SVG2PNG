@@ -62,7 +62,6 @@ void readSVG(const string &svg_file, Point &dimensions,
     }
 
     svg_elements = shapes;
-
     shapes.clear();
 }
 
@@ -85,6 +84,34 @@ void parseElement(tinyxml2::XMLElement *child,
     string transform_origin = "";
 
     switch (encode(child_name)) {
+    case group: {
+        vector<SVGElement *> group_shapes;
+        for (XMLElement *group_child = child->FirstChildElement();
+             group_child != NULL;
+             group_child = group_child->NextSiblingElement()) {
+            parseElement(group_child, group_shapes, dictionary);
+        }
+        if (child->Attribute("transform") != NULL) {
+            transform = child->Attribute("transform");
+            if (child->Attribute("transform-origin") != NULL) {
+                transform_origin = child->Attribute("transform-origin");
+                origin = {
+                    stoi(
+                        transform_origin.substr(0, transform_origin.find(" "))),
+                    stoi(transform_origin.substr(transform_origin.find(" ") + 1,
+                                                 transform_origin.size()))};
+            }
+        }
+        Group *g = new Group(group_shapes);
+        if (transform != "") {
+            g->transform(transform, origin);
+        }
+        if (child->Attribute("id") != NULL) {
+            dictionary[child->Attribute("id")] = g;
+        }
+        shapes.push_back(g);
+        break;
+    }
     case ellipse: {
         c_fill = parse_color(child->Attribute("fill"));
         c_center = {child->IntAttribute("cx"), child->IntAttribute("cy")};
@@ -267,8 +294,33 @@ void parseElement(tinyxml2::XMLElement *child,
         shapes.push_back(l);
         if (child->Attribute("id") != NULL) {
             dictionary[child->Attribute("id")] = l;
-            cout << dictionary[child->Attribute("id")] << endl;
         }
+        break;
+    }
+    case use: {
+        string href = child->Attribute("href");
+        string ref = href.substr(1);
+        SVGElement *elem = dictionary[ref];
+        if (child->Attribute("transform") != NULL) {
+            transform = child->Attribute("transform");
+            if (child->Attribute("transform-origin") != NULL) {
+                transform_origin = child->Attribute("transform-origin");
+                origin = {
+                    stoi(
+                        transform_origin.substr(0, transform_origin.find(" "))),
+                    stoi(transform_origin.substr(transform_origin.find(" ") + 1,
+                                                 transform_origin.size()))};
+            }
+        }
+
+        Use *u = new Use(elem);
+        if (transform != "") {
+            u->transform(transform, origin);
+        }
+        if (child->Attribute("id") != NULL) {
+            dictionary[child->Attribute("id")] = u;
+        }
+        shapes.push_back(u);
         break;
     }
     default:
