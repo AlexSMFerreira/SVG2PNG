@@ -5,7 +5,6 @@
 #include <cmath>
 #include <iostream>
 
-using namespace std;
 using namespace tinyxml2;
 
 namespace svg {
@@ -66,7 +65,7 @@ void readSVG(const string &svg_file, Point &dimensions,
 }
 
 void parseElement(tinyxml2::XMLElement *child,
-                  std::vector<svg::SVGElement *> &shapes,
+                  vector<svg::SVGElement *> &shapes,
                   unordered_map<string, SVGElement *> &dictionary) {
     string child_name(child->Name());
     Color c_fill;

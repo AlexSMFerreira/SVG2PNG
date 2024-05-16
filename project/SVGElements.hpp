@@ -25,12 +25,12 @@ class SVGElement {
 // readSVG -> implement it in readSVG.cpp
 // convert -> already given (DO NOT CHANGE) in convert.cpp
 
-void readSVG(const std::string &svg_file, Point &dimensions,
-             std::vector<SVGElement *> &svg_elements);
+void readSVG(const string &svg_file, Point &dimensions,
+             vector<SVGElement *> &svg_elements);
 void parseElement(tinyxml2::XMLElement *child,
-                  std::vector<svg::SVGElement *> &shapes,
+                  vector<svg::SVGElement *> &shapes,
                   unordered_map<string, SVGElement *> &dictionary);
-void convert(const string &svg_file, const std::string &png_file);
+void convert(const string &svg_file, const string &png_file);
 
 class Ellipse : public SVGElement {
   public:
@@ -46,31 +46,31 @@ class Ellipse : public SVGElement {
 };
 class Polygon : public SVGElement {
   public:
-    Polygon(const Color &fill, const std::vector<Point> &points);
+    Polygon(const Color &fill, const vector<Point> &points);
     void draw(PNGImage &img) const override;
     void transform(string transform_string, Point transform_origin) override;
     SVGElement *clone() const override;
 
   private:
     Color fill;
-    std::vector<Point> points;
+    vector<Point> points;
 };
 
 class Polyline : public SVGElement {
   public:
-    Polyline(const Color &stroke, const std::vector<Point> &points);
+    Polyline(const Color &stroke, const vector<Point> &points);
     void draw(PNGImage &img) const override;
     void transform(string transform_string, Point transform_origin) override;
     SVGElement *clone() const override;
 
   private:
     Color stroke;
-    std::vector<Point> points;
+    vector<Point> points;
 };
 
 class Group : public SVGElement {
   public:
-    Group(const std::vector<SVGElement *> &elements);
+    Group(const vector<SVGElement *> &elements);
     ~Group();
     void draw(PNGImage &img) const override;
     void addElement(SVGElement *element);
@@ -78,7 +78,7 @@ class Group : public SVGElement {
     SVGElement *clone() const override;
 
   private:
-    std::vector<SVGElement *> elements;
+    vector<SVGElement *> elements;
 };
 
 class Use : public SVGElement {
