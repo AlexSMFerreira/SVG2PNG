@@ -4,7 +4,6 @@
 #include "external/tinyxml2/tinyxml2.h"
 #include <cmath>
 #include <iostream>
-#include <unordered_map>
 
 using namespace std;
 using namespace tinyxml2;
@@ -55,26 +54,21 @@ void readSVG(const string &svg_file, Point &dimensions,
 
     dimensions.x = xml_elem->IntAttribute("width");
     dimensions.y = xml_elem->IntAttribute("height");
+    unordered_map<string, SVGElement *> dictionary;
 
     for (XMLElement *child = xml_elem->FirstChildElement(); child != NULL;
          child = child->NextSiblingElement()) {
-        parseElement(child, shapes);
+        parseElement(child, shapes, dictionary);
     }
 
     svg_elements = shapes;
-
-    unordered_map<string, SVGElement *> dictionary;
-    for (SVGElement *element : svg_elements) {
-        if (element->get_id() != "") {
-            dictionary[element->get_id()] = element;
-        }
-    }
 
     shapes.clear();
 }
 
 void parseElement(tinyxml2::XMLElement *child,
-                  std::vector<svg::SVGElement *> &shapes) {
+                  std::vector<svg::SVGElement *> &shapes,
+                  unordered_map<string, SVGElement *> &dictionary) {
     string child_name(child->Name());
     Color c_fill;
     Point c_center;
@@ -113,7 +107,9 @@ void parseElement(tinyxml2::XMLElement *child,
             e->transform(transform, origin);
         }
         shapes.push_back(e);
-
+        if (child->Attribute("id") != NULL) {
+            dictionary[child->Attribute("id")] = e;
+        }
         break;
     }
     case circle: {
@@ -138,6 +134,9 @@ void parseElement(tinyxml2::XMLElement *child,
             c->transform(transform, origin);
         }
         shapes.push_back(c);
+        if (child->Attribute("id") != NULL) {
+            dictionary[child->Attribute("id")] = c;
+        }
         break;
     }
     case polygon: {
@@ -170,6 +169,9 @@ void parseElement(tinyxml2::XMLElement *child,
             p->transform(transform, origin);
         }
         shapes.push_back(p);
+        if (child->Attribute("id") != NULL) {
+            dictionary[child->Attribute("id")] = p;
+        }
         break;
     }
     case rect: {
@@ -202,6 +204,9 @@ void parseElement(tinyxml2::XMLElement *child,
             r->transform(transform, origin);
         }
         shapes.push_back(r);
+        if (child->Attribute("id") != NULL) {
+            dictionary[child->Attribute("id")] = r;
+        }
         break;
     }
     case polyline: {
@@ -232,6 +237,9 @@ void parseElement(tinyxml2::XMLElement *child,
             p->transform(transform, origin);
         }
         shapes.push_back(p);
+        if (child->Attribute("id") != NULL) {
+            dictionary[child->Attribute("id")] = p;
+        }
         break;
     }
     case line: {
@@ -257,6 +265,10 @@ void parseElement(tinyxml2::XMLElement *child,
             l->transform(transform, origin);
         }
         shapes.push_back(l);
+        if (child->Attribute("id") != NULL) {
+            dictionary[child->Attribute("id")] = l;
+            cout << dictionary[child->Attribute("id")] << endl;
+        }
         break;
     }
     default:

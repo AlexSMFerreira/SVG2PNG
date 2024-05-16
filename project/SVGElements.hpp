@@ -7,6 +7,7 @@
 #include "PNGImage.hpp"
 #include "Point.hpp"
 #include "external/tinyxml2/tinyxml2.h"
+#include <unordered_map>
 using namespace std;
 
 namespace svg {
@@ -29,7 +30,8 @@ class SVGElement {
 void readSVG(const std::string &svg_file, Point &dimensions,
              std::vector<SVGElement *> &svg_elements);
 void parseElement(tinyxml2::XMLElement *child,
-                  std::vector<svg::SVGElement *> &shapes);
+                  std::vector<svg::SVGElement *> &shapes,
+                  unordered_map<string, SVGElement *> &dictionary);
 void convert(const string &svg_file, const std::string &png_file);
 
 class Ellipse : public SVGElement {
