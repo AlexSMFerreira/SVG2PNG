@@ -3,6 +3,7 @@
         "string": "cpp",
         "string_view": "cpp",
         "array": "cpp",
-        "random": "cpp"
+        "random": "cpp",
+        "iostream": "cpp"
     }
 }
